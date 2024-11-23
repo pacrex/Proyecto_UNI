@@ -1,0 +1,7 @@
+npm install
+npm install charts.js react-chartjs-2
+
+
+Anotaciones en graficas 22/11/24
+Quitar la grafica de picos y hacer vistosa la pagina con un fondo llamativo
+añadirle colores vistoso y total de cantidades

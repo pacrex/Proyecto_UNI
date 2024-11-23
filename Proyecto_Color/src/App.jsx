@@ -11,13 +11,13 @@ function App() {
 
   // Datos compartidos para todas las gráficas
   const sharedData = {
-    labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
+    labels: ['Rojo', 'Azul', 'Verde', 'Desconocido'],
     datasets: [
       {
-        label: 'Ventas',
-        data: [65, 59, 80, 81, 56],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-        hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+        label: 'Colores',
+        data: [8, 5, 7, 10],
+        backgroundColor: ['#fd0000', '#005fca', '#00af05', '#292b27'],
+        hoverBackgroundColor: ['#ff4a4a', '#2f6eb5', '#55db43', '#888a85'],
         borderColor: '#36A2EB',
         borderWidth: 1,
       },
@@ -72,7 +72,7 @@ function App() {
 
         <section className="section info">
           <h2>Información</h2>
-          <p>React es una librería de JavaScript para construir interfaces de usuario. Permite crear componentes reutilizables y gestionar el estado de manera eficiente.</p>
+          <p>Aqui se muestra la informacion en tiempo real de los colores que ya hayan sido ya escaneados</p>
           <div className="chart horizontal-bar-chart">
             <h3>Gráfico de Barras Horizontal</h3>
             <Bar data={sharedData} options={barOptions} />
@@ -80,18 +80,9 @@ function App() {
         </section>
 
         <section className="section counter">
-          <h2>QR</h2>
+          <h2></h2>
           <div className="ventana">
-            <button onClick={() => setCount(count + 1)}>
-              Incrementar
-            </button>
-            <button onClick={() => setCount(count - 1)}>
-              Decrementar
-            </button>
-            <button onClick={() => setCount(0)}>
-              Resetear
-            </button>
-            <p>El contador es: {count}</p>
+            Aqui va el creador y lector de qr
           </div>
         </section>
       </main>

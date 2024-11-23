@@ -36,6 +36,24 @@ function App() {
         enabled: true,
       },
     },
+    scales:{
+      y:{
+          ticks: {
+              color: "#db0ad5",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      },
+      x:{
+          ticks: {
+              color: "white",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      }
+    }
   };
 
   // Opciones para el gráfico de dona
@@ -47,7 +65,26 @@ function App() {
         position: 'top',
       },
     },
+    scales:{
+      y:{
+          ticks: {
+              color: "black",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      },
+      x:{
+          ticks: {
+              color: "white",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      }
+    }
   };
+  
 
   return (
     <div className="app">

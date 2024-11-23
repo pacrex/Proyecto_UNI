@@ -172,7 +172,7 @@ footer p {
 
 .horizontal-bar-chart {
   width: 80%;
-  background-color: #190C30; /* Fondo oscuro de la dona */
+  background:linear-gradient(-90deg,#190C30,#2b1353,#2d0377,#390395,#5703e9) ; /* Fondo oscuro de la dona */
   height: 300px;
   margin: 0 auto;
 }

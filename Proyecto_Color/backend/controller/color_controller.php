@@ -1,6 +1,6 @@
 <?php
 include('../functions/color_functions.php');
-
+//Hola
 if(isset($_POST['funcion'])){ 
     $funcion = $_POST['funcion'];
 }else{

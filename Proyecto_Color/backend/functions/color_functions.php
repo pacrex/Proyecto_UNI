@@ -11,7 +11,8 @@ function update_file($color){
 function get_data(){
     $color_json = file_get_contents('../functions/data.json');
     $decoded_json = json_decode($color_json, true);
-    return json_encode($decoded_json);
+    $res = format_json($decoded_json)
+    return json_encode($res);
 }
 function reset(){
     $color_json = file_get_contents('../functions/data.json');
@@ -21,5 +22,13 @@ function reset(){
     }
     file_put_contents('../functions/data.json',json_encode($decoded_json));
     return "{$color} got updated";
+}
+
+function format_json($array){
+    $res = array();
+    foreach ($variable as $key => $value) {
+        array_push($res,array("x"=>$key,"y"=>$value))
+    }
+    return $res;
 }
 ?>

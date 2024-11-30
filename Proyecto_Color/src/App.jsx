@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import './App.css'; // Aquí van los estilos
-import { Doughnut, Line, Bar } from 'react-chartjs-2'; // Importa Bar para la gráfica de barras
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import './App.css';
+import { Doughnut, Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
 
 // Registrar componentes necesarios para Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
 function App() {
   const [count, setCount] = useState(0);
 
-  // Datos compartidos para todas las gráficas
   const sharedData = {
     labels: ['Rojo', 'Azul', 'Verde', 'Desconocido'],
     datasets: [
@@ -24,104 +23,79 @@ function App() {
     ],
   };
 
-  // Opciones para la gráfica horizontal
   const barOptions = {
-    indexAxis: 'y', // Cambia la orientación de la gráfica
+    indexAxis: 'y',
     responsive: true,
     plugins: {
       legend: {
         position: 'top',
-      },
-      tooltip: {
-        enabled: true,
+        labels: {
+          color: '#E0E0E0', // Cambiar el color de la leyenda
+          font: { size: 16 }, // Cambiar el tamaño de la fuente de la leyenda
+        },
       },
     },
-    scales:{
-      y:{
-          ticks: {
-              color: "#db0ad5",
-              font:{size: 18},
-              stepSize: 1,
-              beginAtZero: true
-          }
+    scales: {
+      y: {
+        ticks: {
+          color: '#db0ad5', // Color de las etiquetas del eje Y
+          font: { size: 18 }, // Tamaño de la fuente de las etiquetas
+        },
       },
-      x:{
-          ticks: {
-              color: "white",
-              font:{size: 18},
-              stepSize: 1,
-              beginAtZero: true
-          }
-      }
-    }
+      x: {
+        ticks: {
+          color: 'white', // Color de las etiquetas del eje X
+          font: { size: 18 }, // Tamaño de la fuente de las etiquetas
+        },
+      },
+    },
   };
 
-  // Opciones para el gráfico de dona
   const doughnutOptions = {
     responsive: true,
-    maintainAspectRatio: false, // Permite personalizar el tamaño
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: 'top',
+        labels: {
+          color: '#E0E0E0', // Cambiar el color de la leyenda
+          font: { size: 16 }, // Cambiar el tamaño de la fuente de la leyenda
+        },
+      },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => {
+            return `${tooltipItem.label}: ${tooltipItem.raw}`; // Personalizar el tooltip
+          },
+        },
       },
     },
-    scales:{
-      y:{
-          ticks: {
-              color: "black",
-              font:{size: 18},
-              stepSize: 1,
-              beginAtZero: true
-          }
-      },
-      x:{
-          ticks: {
-              color: "white",
-              font:{size: 18},
-              stepSize: 1,
-              beginAtZero: true
-          }
-      }
-    }
   };
-  
 
   return (
     <div className="app">
-
-      {/* Contenido principal en una cuadrícula 2x2 */}
       <main className="main-content">
-        <section className="section welcome">
-          <h1>Gráficas</h1>
-          <div className="charts-container">
-            {/* Gráfico de Dona */}
-            <div className="chart donut-chart">
-              <h3>Gráfico de Dona</h3>
-              <Doughnut data={sharedData} options={doughnutOptions} />
-            </div>
-            {/* Gráfico de Picos */}
-            <div className="chart">
-              <h3>Gráfico de Picos</h3>
-              <Line data={sharedData} />
-            </div>
+        {/* Sección Gráfico de Dona */}
+        <section className="section">
+          <h3>Gráfico de Dona</h3>
+          <div className="chart donut-chart">
+            <Doughnut data={sharedData} options={doughnutOptions} />
           </div>
         </section>
 
-        <section className="section info">
-          <h2>Información</h2>
-          <p>Aqui se muestra la informacion en tiempo real de los colores que ya hayan sido ya escaneados</p>
+        {/* Sección Gráfico de Barras Horizontal */}
+        <section className="section">
+          <h3>Gráfico de Barras Horizontal</h3>
           <div className="chart horizontal-bar-chart">
-            <h3>Gráfico de Barras Horizontal</h3>
             <Bar data={sharedData} options={barOptions} />
           </div>
         </section>
 
-        <section className="section counter">
-          <h2></h2>
-          <div className="ventana">
-            Aqui va el creador y lector de qr
-          </div>
-        </section>
+        {/* Sección Lector y Creador de QR (debajo de las otras secciones) */}
+        {/* <section className="section ventana-section">
+          <h3>Lector y Creador de QR</h3>
+          <div className="ventana">Aquí va el creador y lector de QR</div>
+        </section> */}
       </main>
 
       {/* Pie de página */}

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'; // Aquí van los estilos
 import { Doughnut, Line, Bar } from 'react-chartjs-2'; // Importa Bar para la gráfica de barras
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
@@ -6,16 +6,44 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, BarElement,
 // Registrar componentes necesarios para Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement);
 
-function App() {
-  const [count, setCount] = useState(0);
 
+
+function App() {
+
+  const [counter, setCounter] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  const colores = new Array();
+  const valores = new Array();
+
+  useEffect(() => {
+    const data = new FormData();
+    data.append('funcion', 'get_data');
+    fetch('http://localhost:80/UX_Backend/controller/color_controller.php', {
+        method: 'POST',
+        body: data
+    }).then(function(response) {
+      response.json().then(resp => {
+        resp.forEach((e)=>{
+          console.log(e)
+          colores.push(e.x);
+          valores.push(e.y);
+        })
+      });
+    })
+  }, [])
   // Datos compartidos para todas las gráficas
   const sharedData = {
-    labels: ['Rojo', 'Azul', 'Verde', 'Desconocido'],
+    labels:  colores,
     datasets: [
       {
         label: 'Colores',
-        data: [8, 5, 7, 10],
+        data:   valores,
         backgroundColor: ['#fd0000', '#005fca', '#00af05', '#292b27'],
         hoverBackgroundColor: ['#ff4a4a', '#2f6eb5', '#55db43', '#888a85'],
         borderColor: '#36A2EB',

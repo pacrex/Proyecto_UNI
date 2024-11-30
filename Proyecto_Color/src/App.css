@@ -1,178 +1,81 @@
-/* Estilos globales */
-* {
-  margin: 0;
-  padding: 0;
+/* Ajuste de la cuadrícula principal */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  grid-template-rows: auto auto; /* Dos filas automáticas */
+  gap: 20px; /* Espaciado entre los elementos */
+  padding: 20px;
+  height: calc(100vh - 80px); /* Altura total, menos header y footer */
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
-body {
-  background-color: #190C30; /* Fondo oscuro principal */
-  color: #E0E0E0; /* Texto claro */
-  font-size: 18px; /* Tamaño de fuente estándar */
-}
-
-/* Estilo de los títulos */
-h1, h2 {
-  color: #2E008B; /* Títulos con acento púrpura */
-}
-
-p {
-  font-size: 1.2rem;
-  color: #B0BEC5; /* Texto en gris claro */
-}
-
-/* Barra de navegación */
-.header {
-  background-color: #10002B; /* Fondo de la barra de navegación */
-  padding: 20px 0;
+.section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-90deg, #190C30, #2b1353, #2d0377, #390395, #5703e9);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.header nav ul {
-  list-style: none;
+/* Gráfico de Dona */
+.donut-chart {
+  width: 90%;
+  height: 500px;
+  margin: 10px auto;
+  background-color:#240a4f;
+  border-radius: 15px;
 }
 
-.header nav ul li {
-  display: inline;
-  margin: 0 30px;
+/* Gráfico de Barras */
+.horizontal-bar-chart {
+  width: 90%;
+  height: 500px;
+  background-color:#240a4f;
+  border-radius: 20px;
+  margin: 10px auto;
 }
 
-.header nav ul li a {
-  text-decoration: none;
-  color: #BB86FC; /* Texto con acento */
-  font-size: 1.3rem;
-}
-
-.header nav ul li a:hover {
-  text-decoration: underline;
-}
-
-/* Estilo para la sección principal */
-main {
-  text-align: center;
-  padding: 80px 40px;
+/* Ventana de QR: nueva sección abajo */
+.ventana-section {
+  grid-column: span 2; /* Ocupa ambas columnas */
+  height: auto; /* Altura auto ajustable */
+  background-color: #2E008B;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .ventana {
-  width: 100%;
-  max-width: 800px;
+  width: 90%;
   height: 250px;
-  margin: 40px auto;
-  background-color: #2E008B; /* Fondo de la ventana */
-  border: 3px solid #BB86FC; /* Borde acentuado */
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  margin: 10px auto;
+  background-color:#240a4f;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-button {
-  padding: 20px 40px;
-  font-size: 1.5rem;
-  background-color: #2E008B; /* Botón con color de fondo */
-  color: #E0E0E0; /* Texto claro */
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-button:hover {
-  background-color: #190C30; /* Color más oscuro al pasar el cursor */
-}
-
-/* Pie de página */
+/* Footer */
 footer {
-  background-color: #10002B; /* Fondo del pie de página */
-  color: #E0E0E0;
   text-align: center;
-  padding: 30px 0;
-}
-
-footer p {
-  font-size: 1.2rem;
-}
-
-/* Responsividad: Adaptación para pantallas pequeñas */
-@media (max-width: 1200px) {
-  .ventana {
-    width: 75%;
-  }
-
-  .header nav ul li {
-    margin: 0 15px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    font-size: 16px;
-  }
-
-  .ventana {
-    width: 90%;
-    height: 200px;
-  }
-
-  button {
-    font-size: 1.3rem;
-    padding: 15px 30px;
-  }
-
-  h1 {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .ventana {
-    width: 100%;
-  }
-
-  button {
-    width: 100%;
-  }
-}
-
-/* Estilos para gráficas */
-.charts-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-}
-
-.chart {
-  margin-top: 20px;
-  width: 40%;
-  background-color: #190C30; /* Fondo oscuro de la dona */  
-  border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  font-size: 0.9rem;
+  background-color: #10002B;
+  color: #E0E0E0;
 }
 
-/* Estilo específico para el gráfico de dona */
-.donut-chart {
-  width: 600px;  /* Ancho pequeño */
-  height: 600px; /* Alto pequeño */
-  margin: 0 auto; /* Centra el gráfico */
-  background-color: #190C30; /* Fondo oscuro de la dona */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 50px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Sombra */
-}
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .main-content {
+    grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+  }
 
-.horizontal-bar-chart {
-  width: 80%;
-  background:linear-gradient(-90deg,#190C30,#2b1353,#2d0377,#390395,#5703e9) ; /* Fondo oscuro de la dona */
-  height: 300px;
-  margin: 0 auto;
+  .ventana-section {
+    grid-column: span 1; /* Ocupa solo una columna */
+  }
 }
+  

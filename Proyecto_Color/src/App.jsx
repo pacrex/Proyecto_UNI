@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css'; // Aquí van los estilos
 import { Doughnut, Line, Bar } from 'react-chartjs-2'; // Importa Bar para la gráfica de barras
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
@@ -6,10 +6,36 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, BarElement,
 // Registrar componentes necesarios para Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, LineElement, BarElement, CategoryScale, LinearScale, PointElement);
 
+
 function App() {
 
   const [counter, setCounter] = useState(0);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter + 1);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+  const colores = new Array();
+  const valores = new Array();
+
+  useEffect(() => {
+    const data = new FormData();
+    data.append('funcion', 'get_data');
+    fetch('http://localhost:80/UX_Backend/controller/color_controller.php', {
+        method: 'POST',
+        body: data
+    }).then(function(response) {
+      response.json().then(resp => {
+        resp.forEach((e)=>{
+          console.log(e)
+          colores.push(e.x);
+          valores.push(e.y);
+        })
+      });
+    })
+  }, [])
   // Datos compartidos para todas las gráficas
   const sharedData = {
     labels:  colores,
@@ -25,79 +51,104 @@ function App() {
     ],
   };
 
+  // Opciones para la gráfica horizontal
   const barOptions = {
-    indexAxis: 'y',
+    indexAxis: 'y', // Cambia la orientación de la gráfica
     responsive: true,
     plugins: {
       legend: {
         position: 'top',
-        labels: {
-          color: '#E0E0E0', // Cambiar el color de la leyenda
-          font: { size: 16 }, // Cambiar el tamaño de la fuente de la leyenda
-        },
-      },
-    },
-    scales: {
-      y: {
-        ticks: {
-          color: '#db0ad5', // Color de las etiquetas del eje Y
-          font: { size: 18 }, // Tamaño de la fuente de las etiquetas
-        },
-      },
-      x: {
-        ticks: {
-          color: 'white', // Color de las etiquetas del eje X
-          font: { size: 18 }, // Tamaño de la fuente de las etiquetas
-        },
-      },
-    },
-  };
-
-  const doughnutOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        position: 'top',
-        labels: {
-          color: '#E0E0E0', // Cambiar el color de la leyenda
-          font: { size: 16 }, // Cambiar el tamaño de la fuente de la leyenda
-        },
       },
       tooltip: {
-        callbacks: {
-          label: (tooltipItem) => {
-            return `${tooltipItem.label}: ${tooltipItem.raw}`; // Personalizar el tooltip
-          },
-        },
+        enabled: true,
       },
     },
+    scales:{
+      y:{
+          ticks: {
+              color: "#db0ad5",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      },
+      x:{
+          ticks: {
+              color: "white",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      }
+    }
   };
+
+  // Opciones para el gráfico de dona
+  const doughnutOptions = {
+    responsive: true,
+    maintainAspectRatio: false, // Permite personalizar el tamaño
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+    },
+    scales:{
+      y:{
+          ticks: {
+              color: "black",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      },
+      x:{
+          ticks: {
+              color: "white",
+              font:{size: 18},
+              stepSize: 1,
+              beginAtZero: true
+          }
+      }
+    }
+  };
+  
 
   return (
     <div className="app">
+
+      {/* Contenido principal en una cuadrícula 2x2 */}
       <main className="main-content">
-        {/* Sección Gráfico de Dona */}
-        <section className="section">
-          <h3>Gráfico de Dona</h3>
-          <div className="chart donut-chart">
-            <Doughnut data={sharedData} options={doughnutOptions} />
+        <section className="section welcome">
+          <h1>Gráficas</h1>
+          <div className="charts-container">
+            {/* Gráfico de Dona */}
+            <div className="chart donut-chart">
+              <h3>Gráfico de Dona</h3>
+              <Doughnut data={sharedData} options={doughnutOptions} />
+            </div>
+            {/* Gráfico de Picos */}
+            <div className="chart">
+              <h3>Gráfico de Picos</h3>
+              <Line data={sharedData} />
+            </div>
           </div>
         </section>
 
-        {/* Sección Gráfico de Barras Horizontal */}
-        <section className="section">
-          <h3>Gráfico de Barras Horizontal</h3>
+        <section className="section info">
+          <h2>Información</h2>
+          <p>Aqui se muestra la informacion en tiempo real de los colores que ya hayan sido ya escaneados</p>
           <div className="chart horizontal-bar-chart">
+            <h3>Gráfico de Barras Horizontal</h3>
             <Bar data={sharedData} options={barOptions} />
           </div>
         </section>
 
-        {/* Sección Lector y Creador de QR (debajo de las otras secciones) */}
-        {/* <section className="section ventana-section">
-          <h3>Lector y Creador de QR</h3>
-          <div className="ventana">Aquí va el creador y lector de QR</div>
-        </section> */}
+        <section className="section counter">
+          <h2></h2>
+          <div className="ventana">
+            Aqui va el creador y lector de qr
+          </div>
+        </section>
       </main>
 
       {/* Pie de página */}
